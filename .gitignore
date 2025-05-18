@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+iris.db
+ipy.py
+irispy.py
+todo
+*.pyc
+.vscode/
+tests/
+*egg-info/
+dist/
