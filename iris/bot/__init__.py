@@ -41,6 +41,8 @@ class Bot:
             self.emitter.emit("new_member", [chat])
         elif origin == "DELMEM":
             self.emitter.emit("del_member", [chat])
+        else:
+            self.emitter.emit("unknown", [chat])
 
     def __process_iris_request(self, req: IrisRequest):
         v = {}
