@@ -52,10 +52,10 @@ class KakaoLinkCookieStorage:
 
 class KakaoLinkAuthorizationProvider:
     def __init__(self, iris_url: str):
-        self.iris_url = iris_url
+        self.iris_url = f"http://{iris_url}"
         
     async def get_authorization(self) -> str:
-        aot = requests.get(f"http://{self.iris_url}/aot").json()["aot"]
+        aot = requests.get(f"{self.iris_url}/aot").json()["aot"]
         access_token = f"{aot['access_token']}-{aot['d_id']}"
         return access_token
 

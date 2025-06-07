@@ -27,9 +27,13 @@ class Bot:
             )
         if self.iris_url.endswith("/"):
             self.iris_url = self.iris_url[:-1]
-            
+
+        url_split = self.iris_url.split(":")
+        if len(url_split) != 2 or len(url_split[0].split(".")) != 4:
+            raise ValueError("Iris endpoint 주소는 IP:PORT 형식이어야 합니다. ex) 172.30.10.66:3000")
+
         self.iris_ws_endpoint = f"ws://{self.iris_url}/ws"
-        self.api = IrisAPI(f"http://{iris_url}")
+        self.api = IrisAPI(f"http://{self.iris_url}")
 
     def __process_chat(self, chat: ChatContext):
         self.emitter.emit("chat", [chat])

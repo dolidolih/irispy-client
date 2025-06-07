@@ -26,9 +26,13 @@ IRIS_PY_CONTENT = """
 from iris import Bot, ChatContext, IrisLink
 import sys
 
+if len(sys.argv) < 2:
+    print("Usage: python iris.py 172.30.10.66:3000")
+    sys.exit(1)
 iris_url = sys.argv[1]
 bot = Bot(iris_url)
-kl = IrisLink(bot.api.iris_endpoint)
+#bot.iris_url은 정제된 주소(IP:PORT 형식)
+kl = IrisLink(bot.iris_url)
 
 #메시지 감지
 @bot.on_event("message")
@@ -421,7 +425,14 @@ def handle_service_stop(args):
         print(f"Service '{service_name}' stopped successfully.")
     else:
         print(f"Failed to stop service '{service_name}'. Check status for details.", file=sys.stderr)
-
+        
+def handle_service_restart(args):
+    service_name = _get_service_name()
+    print(f"Attempting to restart service '{service_name}'...")
+    if _run_systemctl_command("restart", service_name, use_sudo=True):
+        print(f"Service '{service_name}' restarted successfully.")
+    else:
+        print(f"Failed to restart service '{service_name}'. Check status for details.", file=sys.stderr)
 
 def handle_service_status(args):
     service_name = _get_service_name()
@@ -494,6 +505,9 @@ def main():
 
     service_stop_parser = service_subparsers.add_parser("stop", help="Stop the iris systemd service (requires sudo).")
     service_stop_parser.set_defaults(func=handle_service_stop)
+    
+    service_stop_parser = service_subparsers.add_parser("restart", help="Restart the iris systemd service (requires sudo).")
+    service_stop_parser.set_defaults(func=handle_service_restart)
 
     service_status_parser = service_subparsers.add_parser("status", help="Show the status of the iris systemd service (requires sudo).")
     service_status_parser.set_defaults(func=handle_service_status)
