@@ -27,6 +27,10 @@ class Message:
             self.image = ChatImage(self)
         else:
             self.image = None
+        if len(self.msg) >= 3900 and "path" in self.attachment.keys():
+            attachment_full_msg = requests.get('https://dn-m.talk.kakao.com/'+self.attachment['path'])
+            attachment_full_msg.encoding = "utf-8"
+            self.msg = attachment_full_msg.text
     
     def __repr__(self) -> str:
         return f"Message(id={self.id}, type={self.type}, msg={self.msg})"
