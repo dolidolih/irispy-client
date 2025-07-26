@@ -85,7 +85,7 @@ class User:
                 else:
                     query = "SELECT nickname,enc FROM db2.open_chat_member WHERE user_id = ?"
                     results = self._api.query(query, [self.id])
-                    name = results[0].get("original_profile_image_url")
+                    name = results[0].get("nickname")
                 return name
             
             else:
