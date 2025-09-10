@@ -466,11 +466,11 @@ def main():
     admin_subparsers = parser_admin.add_subparsers(dest="admin_action", required=True, help="Action for admin users.")
 
     admin_add = admin_subparsers.add_parser("add", help="Add a user to the admin list.")
-    admin_add.add_argument("user_id", help="The ID of the user to add as admin.")
+    admin_add.add_argument("user_id", type=int, help="The ID of the user to add as admin.")
     admin_add.set_defaults(func=handle_admin_commands)
 
     admin_del = admin_subparsers.add_parser("del", help="Remove a user from the admin list.")
-    admin_del.add_argument("user_id", help="The ID of the user to remove from admin.")
+    admin_del.add_argument("user_id", type=int, help="The ID of the user to remove from admin.")
     admin_del.set_defaults(func=handle_admin_commands)
 
     admin_list = admin_subparsers.add_parser("list", help="List all admin user IDs.")
@@ -481,16 +481,16 @@ def main():
     ban_subparsers = parser_ban.add_subparsers(dest="ban_action", required=True, help="Action for banned users.")
 
     ban_add = ban_subparsers.add_parser("add", help="Add a user to the ban list.")
-    ban_add.add_argument("user_id", help="The ID of the user to ban.")
+    ban_add.add_argument("user_id", type=int, help="The ID of the user to ban.")
     ban_add.set_defaults(func=handle_ban_commands)
 
     ban_del = ban_subparsers.add_parser("del", help="Remove a user from the ban list.")
-    ban_del.add_argument("user_id", help="The ID of the user to unban.")
+    ban_del.add_argument("user_id", type=int, help="The ID of the user to unban.")
     ban_del.set_defaults(func=handle_ban_commands)
 
     # Per specification: "iris ban list <user_id>" checks a specific user
     ban_list = ban_subparsers.add_parser("list", help="Check if a specific user is in the ban list.")
-    ban_list.add_argument("user_id", help="The ID of the user to check ban status for.")
+    ban_list.add_argument("user_id", type=int, help="The ID of the user to check ban status for.")
     ban_list.set_defaults(func=handle_ban_commands)
 
     # --- iris service ---
