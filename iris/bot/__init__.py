@@ -88,7 +88,7 @@ class Bot:
                     self.bot_id = self.api.get_info()["bot_id"]
                     while True:
                         try:
-                            recv = ws.recv(timeout=1)
+                            recv = ws.recv(timeout=0.01)
                         except TimeoutError:
                             continue
 
