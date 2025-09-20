@@ -12,5 +12,9 @@ dependencies = [
     "httpx"
 ]
 
+[project.urls]
+Homepage = "https://github.com/dolidolih/irispy-client"
+Repository = "https://github.com/dolidolih/irispy-client"
+
 [project.scripts]
 iris = "iris.cli:main"
