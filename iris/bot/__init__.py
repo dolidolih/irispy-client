@@ -87,7 +87,11 @@ class Bot:
                     print("웹소켓에 연결되었습니다")
                     self.bot_id = self.api.get_info()["bot_id"]
                     while True:
-                        recv = ws.recv()
+                        try:
+                            recv = ws.recv(timeout=0.01)
+                        except TimeoutError:
+                            continue
+
                         try:
                             data: dict = json.loads(recv)
                             data["raw"] = data.get("json")
